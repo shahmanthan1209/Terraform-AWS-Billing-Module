@@ -2,7 +2,7 @@ provider "aws" {}
 data "aws_caller_identity" "current" {}
 
 locals {
-  name        = ""
+  name        = "" # project/AWS account name
   project     = "billing"
 }
 
@@ -16,35 +16,35 @@ module "billing_alarm" {
 
   services = {
     EC2 = {
-      budget_limit = ""
+      budget_limit = "" # monthly limit for AWS Service
     },
 
     S3 = {
-      budget_limit = ""
+      budget_limit = "" # monthly limit for AWS Service
     },
 
     KMS = {
-      budget_limit = ""
+      budget_limit = "" # monthly limit for AWS Service
     },
 
     CloudWatch = {
-      budget_limit = ""
+      budget_limit = "" # monthly limit for AWS Service
     },
 
     DynamoDB = {
-      budget_limit = ""
+      budget_limit = "" # monthly limit for AWS Service
     },
 
     Route53 = {
-      budget_limit = ""
+      budget_limit = "" # monthly limit for AWS Service
     },
 
     EC2Other = {
-      budget_limit = ""
+      budget_limit = "" # monthly limit for AWS Service
     },
 
     Config = {
-      budget_limit = ""
+      budget_limit = "" # monthly limit for AWS Service
     }
     ## Add AWS Services here
   }
