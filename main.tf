@@ -1,4 +1,13 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}
+
 provider "aws" {}
+
 data "aws_caller_identity" "current" {}
 
 locals {
@@ -7,7 +16,7 @@ locals {
 }
 
 module "billing_alarm" {
-  source = "../Modules/Billing/"
+  source = "./Modules/Billing/"
   providers = {
     aws = "aws"
   }

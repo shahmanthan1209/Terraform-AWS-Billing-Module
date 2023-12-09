@@ -2,8 +2,8 @@ provider "aws" {}
 data "aws_caller_identity" "current" {}
 
 locals {
-  name        = var.name
-  project     = "billing"
+  name    = var.name
+  project = "billing"
 }
 
 resource "aws_sns_topic" "account_billing_alarm_topic" {
@@ -20,7 +20,7 @@ resource "aws_sns_topic_policy" "account_billing_alarm_policy" {
 data "aws_iam_policy_document" "sns_topic_policy" {
 
   statement {
-    sid = "AWSBudgetsSNSPublishingPermissions"
+    sid    = "AWSBudgetsSNSPublishingPermissions"
     effect = "Allow"
 
     actions = [
@@ -62,10 +62,10 @@ resource "aws_budgets_budget" "budget_account" {
   time_period_start = "2020-01-01_00:00"
 
   notification {
-    comparison_operator       = "GREATER_THAN"
-    threshold                 = 100
-    threshold_type            = "PERCENTAGE"
-    notification_type         = "FORECASTED"
+    comparison_operator = "GREATER_THAN"
+    threshold           = 100
+    threshold_type      = "PERCENTAGE"
+    notification_type   = "FORECASTED"
     subscriber_sns_topic_arns = [
       aws_sns_topic.account_billing_alarm_topic.arn
     ]
@@ -86,15 +86,16 @@ resource "aws_budgets_budget" "budget_resources" {
   time_unit         = "MONTHLY"
   time_period_start = "2020-01-01_00:00"
 
-  cost_filters = {
-    Service = lookup(local.aws_services, each.key)
+  cost_filter {
+    name   = "Service"
+    values = [lookup(local.aws_services, each.key, "DefaultDescription")]
   }
 
   notification {
-    comparison_operator       = "GREATER_THAN"
-    threshold                 = 100
-    threshold_type            = "PERCENTAGE"
-    notification_type         = "FORECASTED"
+    comparison_operator = "GREATER_THAN"
+    threshold           = 100
+    threshold_type      = "PERCENTAGE"
+    notification_type   = "FORECASTED"
     subscriber_sns_topic_arns = [
       aws_sns_topic.account_billing_alarm_topic.arn
     ]
